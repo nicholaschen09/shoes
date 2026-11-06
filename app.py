@@ -8,6 +8,7 @@ from __future__ import annotations
 import json
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from urllib.parse import urlsplit
 
 ROOT = Path(__file__).parent
 PUBLIC = ROOT / "public"
@@ -89,6 +90,21 @@ SHOES = [
         "details": ["Mesh upper", "Retro runner"],
         "imageUrl": "/images/new-balance.png",
     },
+    {
+        "id": "casual-days-01",
+        "brand": "Vans",
+        "model": "Old Skool",
+        "colorway": "Black / White",
+        "category": "Casual",
+        "price": 70,
+        "currency": "USD",
+        "purchaseYear": 2022,
+        "wornSince": 2022,
+        "rating": 4.7,
+        "comments": "A dependable everyday classic with an easy profile.",
+        "details": ["Canvas upper", "Waffle outsole"],
+        "imageUrl": "/images/vans.png?v=2",
+    },
 ]
 
 
@@ -96,7 +112,8 @@ class ShowcaseHandler(BaseHTTPRequestHandler):
     """Serve the compiled frontend and the in-code shoe collection."""
 
     def do_GET(self) -> None:  # noqa: N802 - required by BaseHTTPRequestHandler
-        if self.path == "/api/shoes":
+        request_path = urlsplit(self.path).path
+        if request_path == "/api/shoes":
             self._send_json(SHOES)
             return
 
@@ -109,8 +126,9 @@ class ShowcaseHandler(BaseHTTPRequestHandler):
             "/images/nike.png": (PUBLIC / "images" / "nike.png", "image/png"),
             "/images/converse.png": (PUBLIC / "images" / "converse.png", "image/png"),
             "/images/new-balance.png": (PUBLIC / "images" / "new-balance.png", "image/png"),
+            "/images/vans.png": (PUBLIC / "images" / "vans.png", "image/png"),
         }
-        asset = assets.get(self.path)
+        asset = assets.get(request_path)
         if asset is None or not asset[0].is_file():
             self.send_error(404, "Not found")
             return
@@ -128,6 +146,7 @@ class ShowcaseHandler(BaseHTTPRequestHandler):
         body = path.read_bytes()
         self.send_response(200)
         self.send_header("Content-Type", content_type)
+        self.send_header("Cache-Control", "no-cache")
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
         self.wfile.write(body)
