@@ -1,0 +1,14 @@
+{
+  "name": "shoes-showcase",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A personal showcase for shoes you have worn.",
+  "scripts": {
+    "build": "tsc",
+    "dev": "npm run build && python3 app.py"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "typescript": "latest"
+  }
+}
