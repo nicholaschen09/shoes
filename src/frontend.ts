@@ -93,7 +93,14 @@ const render = (shoes: Shoe[]): void => {
   `;
 
   const carousel = document.querySelector<HTMLElement>(".carousel");
-  if (carousel) enableDragging(carousel);
+  if (carousel) {
+    enableDragging(carousel);
+    document.addEventListener("wheel", (event) => {
+      if (event.deltaX === 0 && event.deltaY === 0) return;
+      event.preventDefault();
+      carousel.scrollLeft += event.deltaX || event.deltaY;
+    }, { passive: false });
+  }
 
   document.querySelectorAll<HTMLButtonElement>(".shoe").forEach((button) => {
     button.addEventListener("click", () => {
