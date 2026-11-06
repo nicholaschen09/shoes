@@ -15,20 +15,6 @@ DIST = ROOT / "dist"
 
 SHOES = [
     {
-        "id": "field-notes-01",
-        "brand": "New Balance",
-        "model": "990v5",
-        "colorway": "Grey / White",
-        "category": "Daily",
-        "price": 185,
-        "currency": "USD",
-        "purchaseYear": 2023,
-        "wornSince": 2023,
-        "rating": 4.8,
-        "comments": "The pair I reach for when I don't want to think about it.",
-        "details": ["Made in USA", "All-day comfort"],
-    },
-    {
         "id": "weekend-walks-01",
         "brand": "Nike",
         "model": "Air Max 1",
@@ -41,6 +27,7 @@ SHOES = [
         "rating": 4.5,
         "comments": "A little bit of color makes every Saturday better.",
         "details": ["Visible Air", "Retro runner"],
+        "imageUrl": "/images/nike.png",
     },
     {
         "id": "trail-days-01",
@@ -72,6 +59,36 @@ SHOES = [
         "details": ["Road running", "Cushioned ride"],
         "imageUrl": "/images/hoka.png",
     },
+    {
+        "id": "classic-days-01",
+        "brand": "Converse",
+        "model": "Chuck Taylor All Star",
+        "colorway": "Black / White",
+        "category": "Classic",
+        "price": 65,
+        "currency": "USD",
+        "purchaseYear": 2021,
+        "wornSince": 2021,
+        "rating": 4.6,
+        "comments": "A classic that works with almost everything.",
+        "details": ["Canvas upper", "High top"],
+        "imageUrl": "/images/converse.png",
+    },
+    {
+        "id": "everyday-days-01",
+        "brand": "New Balance",
+        "model": "530",
+        "colorway": "White / Silver",
+        "category": "Daily",
+        "price": 100,
+        "currency": "USD",
+        "purchaseYear": 2023,
+        "wornSince": 2023,
+        "rating": 4.7,
+        "comments": "A comfortable everyday pair with a little retro character.",
+        "details": ["Mesh upper", "Retro runner"],
+        "imageUrl": "/images/new-balance.png",
+    },
 ]
 
 
@@ -89,6 +106,9 @@ class ShowcaseHandler(BaseHTTPRequestHandler):
             "/frontend.js": (DIST / "frontend.js", "text/javascript; charset=utf-8"),
             "/images/salomon-xt-6.png": (PUBLIC / "images" / "salomon-xt-6.png", "image/png"),
             "/images/hoka.png": (PUBLIC / "images" / "hoka.png", "image/png"),
+            "/images/nike.png": (PUBLIC / "images" / "nike.png", "image/png"),
+            "/images/converse.png": (PUBLIC / "images" / "converse.png", "image/png"),
+            "/images/new-balance.png": (PUBLIC / "images" / "new-balance.png", "image/png"),
         }
         asset = assets.get(self.path)
         if asset is None or not asset[0].is_file():
